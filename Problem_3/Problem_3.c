@@ -1,5 +1,13 @@
+/* Problem_3:
+ * Largest prime factor:
+ *
+ * The prime factors of 13195 are 5, 7, 13 and 29.
+ *
+ * What is the largest prime factor of the number 600851475143 ?
+ */
+
 #include<stdio.h>
-void main()
+int main()
 {
 	unsigned long long int i,j,k=1,num=0,status,l=0;
 	printf("Enter Number:\t");
@@ -42,4 +50,5 @@ void main()
 	if(status==1)
 		printf("\nLargest Prime factor is %llu\n",l);
 	printf("\n");
+	return 0;
 }
