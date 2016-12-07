@@ -1,0 +1,7 @@
+11:55:27 **** Clean-only build of configuration Debug for project C_Program ****
+make clean 
+rm -rf  ./Problem_2/Problem_2.o  ./Problem_1/Problem_1.o  ./Problem_2/Problem_2.d  ./Problem_1/Problem_1.d  C_Program
+ 
+
+11:55:27 Build Finished (took 200ms)
+

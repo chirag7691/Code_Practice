@@ -62,97 +62,543 @@ int main(int argc, char **argv)
 	{ 20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54 },
 	{ 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48 } };
 
-	int i, j, k, l, prod = 1, temp = 1, a;
+	int i, j, k, l, a;
+	long prod = 1, temp = 1;
 
 	/* output each array element's value */
 	for (i = 0; i < 20; i++)
 	{
 		for (j = 0; j < 20; j++)
 		{
-			if (i < 3 && j < 3)
+			if (i < 3)
 			{
-				for (k = 0; k < 3; ++k)
+				if (j < 3)
 				{
-					if (k == 0)
+					for (k = 0; k < 3; ++k)
 					{
-						for (l = j, a = i; l < (4 + j); ++l)
+						if (k == 0)
 						{
-							temp = temp * data[a][l];
-							if (temp > prod)
-								prod = temp;
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (j + 4); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n", i, j, k, temp);
-						temp = 1;
-					}
 
-					else if (k == 1)
-					{
-						for (l = i, a = j; l < (4 + i); ++l)
+						else if (k == 1)
 						{
-							temp = temp * data[l][a];
-							if (temp > prod)
-								prod = temp;
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n", i, j, k, temp);
-						temp = 1;
-					}
 
-					else if (k == 2)
-					{
-						for (l = i, a = j; l < (4 + i); ++l, ++a)
+						else if (k == 2)
 						{
-							temp = temp * data[l][a];
-							if (temp > prod)
-								prod = temp;
+							// right-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n\n", i, j, k, temp);
-						temp = 1;
+					}
+				}
+				else if ((j >= 3) && (j <= 16))
+				{
+					for (k = 0; k < 5; ++k)
+					{
+						if (k == 0)
+						{
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (j + 4); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// right-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 3)
+						{
+							// left 4 digit of data[i][j]
+							for (l = j, a = i; l > (j - 4); --l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 4)
+						{
+							// left-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+				else if (j > 16)
+				{
+					for (k = 0; k < 3; ++k)
+					{
+						if (k == 0)
+						{
+							// left 4 digit of data[i][j]
+							for (l = j, a = i; l > (j - 4); --l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// left-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
 					}
 				}
 			}
-			else if ((i < 3 && j > 16))
+			else if ((i >= 3) && (i <= 16))
 			{
-				for (k = 0; k < 4; ++k)
+				if (j < 3)
 				{
-					if (k == 0)
+					for (k = 0; k < 5; ++k)
 					{
-						for (l = j, a = i; l > (j - 4); --l)
+						if (k == 0)
 						{
-							temp = temp * data[a][l];
-							if (temp > prod)
-								prod = temp;
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (j + 4); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n", i, j, k, temp);
-						temp = 1;
-					}
 
-					if (k == 1)
-					{
-						for (l = i, a = j; l < (i + 4); ++l)
+						else if (k == 1)
 						{
-							temp = temp * data[l][a];
-							if (temp > prod)
-								prod = temp;
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n", i, j, k, temp);
-						temp = 1;
-					}
 
-					if (k == 2)
-					{
-						for (l = i, a = j; l < (i + 4); ++l, --a)
+						else if (k == 2)
 						{
-							temp = temp * data[l][a];
-							if (temp > prod)
-								prod = temp;
+							// right-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
 						}
-						printf("i= %d : j= %d : k= %d : temp = %d\n\n", i, j, k, temp);
-						temp = 1;
+						else if (k == 3)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 4)
+						{
+							// right-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+				else if ((j >= 3) && (j <= 16))
+				{
+					for (k = 0; k < 5; ++k)
+					{
+						if (k == 0)
+						{
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (j + 4); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// right-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 3)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 4)
+						{
+							// right-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+				else if (j > 16)
+				{
+					for (k = 0; k < 5; ++k)
+					{
+						if (k == 0)
+						{
+							// left 4 digit of data[i][j]
+							for (l = j, a = i; l > (j - 4); --l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// down 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// left-down-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l < (i + 4); ++l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 3)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 4)
+						{
+							// left-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+			}
+			else if (i > 16)
+			{
+				if (j < 3)
+				{
+					for (k = 0; k < 3; ++k)
+					{
+						if (k == 0)
+						{
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (j + 4); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// right-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+				else if ((j >= 3) && (j <= 16))
+				{
+					for (k = 0; k < 5; ++k)
+					{
+						if (k == 0)
+						{
+							// right 4 digit of data[i][j]
+							for (l = j, a = i; l < (4 + j); ++l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// left 4 digit of data[i][j]
+							for (l = j, a = i; l > (j - 4); --l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 3)
+						{
+							// left-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+						else if (k == 4)
+						{
+							// right-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, ++a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+					}
+				}
+				else if (j > 16)
+				{
+
+					for (k = 0; k < 3; ++k)
+					{
+						if (k == 0)
+						{
+							// up 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 1)
+						{
+							// left-up-diagonal 4 digit of data[i][j]
+							for (l = i, a = j; l > (i - 4); --l, --a)
+							{
+								temp = temp * data[l][a];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n", i, j, k, temp, prod);
+							temp = 1;
+						}
+
+						else if (k == 2)
+						{
+							// left 4 digit of data[i][j]
+							for (l = j, a = i; l > (j - 4); --l)
+							{
+								temp = temp * data[a][l];
+								if (temp > prod)
+									prod = temp;
+							}
+							printf("i= %d : j= %d : k= %d : temp = %ld :prod=%ld\n\n", i, j, k, temp, prod);
+							temp = 1;
+						}
 					}
 				}
 			}
 		}
 	}
 
+	printf("greatest product of four adjacent numbers in the same direction\n(up, down, left, right, or diagonally) in the 20×20 grid = %ld", prod);
 	return 0;
 }

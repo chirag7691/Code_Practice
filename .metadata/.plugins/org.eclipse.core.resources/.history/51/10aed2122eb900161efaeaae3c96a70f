@@ -1,0 +1,29 @@
+#include<stdio.h>
+void main()
+{
+	int i=3, n,count,c;
+
+	printf("Enter the Number of prime number required\n");
+	scanf("%d",&n);
+
+	if ( n >= 1 )
+ 	{
+		printf("First %d prime numbers are :\n",n);
+		printf("1) 2\n");
+	}
+
+	for ( count = 2 ; count <= n ;  )
+	{
+		for ( c = 2 ; c <= i - 1 ; c++ )
+		{
+			if ( i%c == 0 )
+            		break;
+      		}
+      		if ( c == i )
+      		{
+        		printf("%d) %d\n",count,i);
+         		count++;
+      		}
+      		i++;
+   	}
+}
